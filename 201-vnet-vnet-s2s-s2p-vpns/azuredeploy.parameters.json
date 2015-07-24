@@ -1,0 +1,14 @@
+{
+  "location1": {
+      "value": "West US"
+  },
+  "location2": {
+      "value": "West US"
+  },
+  "addressPrefix": {
+      "value": "10.0.0.0/16"
+  },
+  "subnetPrefix": {
+      "value": "10.0.0.0/24"
+  }
+}
