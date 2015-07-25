@@ -2,11 +2,18 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters" : {
-      "location": {
+      "location1": {
         "type": "string",
         "allowedValues": ["East US", "West US", "West Europe", "East Asia", "South East Asia"],
         "metadata" : {
-          "description" : "Deployment location"
+          "description" : "Deployment location for the first vnet"
+        }
+      },
+      "location2": {
+        "type": "string",
+        "allowedValues": ["East US", "West US", "West Europe", "East Asia", "South East Asia"],
+        "metadata" : {
+          "description" : "Deployment location for the second vnet"
         }
       },
       "addressPrefix":{
@@ -27,10 +34,10 @@
     },
     "resources": [
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "virtualNetwork1",
-      "location": "[parameters('location')]",
+      "location": "[parameters('location1')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -46,6 +53,69 @@
           }
         ]
       }
-    }
+    },
+       {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "virtualNetwork1",
+      "location": "[parameters('location2')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "subnet1",
+            "properties" : {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+       {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "virtualNetwork1",
+      "location": "[parameters('location2')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "subnet1",
+            "properties" : {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+       {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "vnet1GatewayIp",
+      "location": "[parameters('location1')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "subnet1",
+            "properties" : {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    } 
     ]
 }
